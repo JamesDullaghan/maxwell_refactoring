@@ -11,21 +11,18 @@ class Emails < ActionMailer::Base
     mail to: @person
   end
 
-  def admin_user_validated(admins, user)
-    @admins = admins.admin_emails
+  def admin_user_validated(admin_emails, user)
     @user = user
-    mail to: @admins
+    mail to: admin_emails
   end
 
-  def admin_new_user(admins, user)
-    @admins = admins.admin_emails
+  def admin_new_user(admin_emails, user)
     @user = user
-    mail to: @admins
+    mail to: admin_emails
   end
 
-  def admin_removing_unvalidated_users(admins, users)
-    @admins = admins.admin_emails
+  def admin_removing_unvalidated_users(admin_emails, users)
     @users = users
-    mail to: @admins
+    mail to: admin_emails
   end
 end

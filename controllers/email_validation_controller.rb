@@ -1,5 +1,5 @@
 class EmailValidationController < ActionController::Base
-  def show
+  def update
     return unless user.present?
 
     user_validation_service = UserValidationService.new(user: user)

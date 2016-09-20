@@ -1,4 +1,5 @@
 # Controller
+# extract to controllers/peoples_controller.rb
 
 class People < ActionController::Base
 
@@ -33,6 +34,20 @@ class People < ActionController::Base
 		end
 	end
 
+	# How is this used? There is no response, just mail delivery
+	# Is it a put or post from ajax, or a rails form?
+	def validateEmail
+		@user = Person.find_by_slug(params[:slug])
+		if @user.present?
+			@user.validated = true
+			@user.save
+			Rails.logger.info "USER: User ##{@person.id} validated email successfully."
+			@admins = Person.where(:admin => true)
+			Emails.admin_user_validated(@admins, user)
+			Emails.welcome(@user).deliver!
+		end
+	end
+
 end
 
 
@@ -52,6 +67,7 @@ end
 
 
 # Mailer
+# extract to mailers/emails.rb
 
 class Emails < ActionMailer::Base
 
@@ -87,7 +103,7 @@ end
 
 
 # Rake Task
-# extract to lib/tasks
+# extract to lib/tasks/accounts.rake
 namespace :accounts do
 
 	desc "Remove accounts where the email was never validated and it is over 30 days old"

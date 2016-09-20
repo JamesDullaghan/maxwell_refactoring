@@ -1,3 +1,6 @@
+# TODO: Rename these classes
+#  Behavior is slightly confusing without context so naming
+#  correctly is difficult without context
 class UserValidationService
   attr_reader :user
 

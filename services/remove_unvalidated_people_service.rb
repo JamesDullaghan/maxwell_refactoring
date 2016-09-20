@@ -1,9 +1,9 @@
 class RemoveUnvalidatedPeopleService
-  attr_reader :people, :admins
+  attr_reader :people, :admin_emails
 
   def initialize(people: people)
     @people = Person.unvalidated
-    @admins = Person.admins
+    @admin_emails = Person.admin_emails
   end
 
   def self.call!
@@ -13,8 +13,8 @@ class RemoveUnvalidatedPeopleService
       people = unvalidated_people_service.people
       admins = unvalidated_people_service.admins
 
-      people.destroy_unvalidated
-      Emails.admin_removing_unvalidated_users(admins, people).deliver
+      people.destroy_people_with_logger_output
+      Emails.admin_removing_unvalidated_users(admin_emails, people).deliver
     end
   end
 end
