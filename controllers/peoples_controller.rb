@@ -1,6 +1,5 @@
 class PeoplesController < ActionController::Base
   def create
-    # RETURN result of save from service
     if person_creator_service.call!
       redirect_to person, notice "Account added!"
     else
