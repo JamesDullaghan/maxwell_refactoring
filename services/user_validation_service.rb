@@ -13,6 +13,6 @@ class UserValidationService
   private
 
   def email_validation_service
-    EmailValidationService.new(user: user)
+    AdminEmailValidationService.new(user: user)
   end
 end

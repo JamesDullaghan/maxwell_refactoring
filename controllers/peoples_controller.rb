@@ -16,9 +16,10 @@ class PeoplesController < ActionController::Base
     end
 
     # RETURN result of save from service
-    persisted = person_creator_service.call!
 
-    if @person.save
+
+    if person_creator_service.call!
+
       Emails.validate_email(@person).deliver
       @admins = Person.where(:admin => true)
       Emails.admin_new_user(@admins, @person).deliver
