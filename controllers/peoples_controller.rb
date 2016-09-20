@@ -1,6 +1,7 @@
 class PeoplesController < ActionController::Base
   def create
     if person_creator_service.call!
+      user_email_validation_service.call!
       redirect_to person, notice "Account added!"
     else
       render :new
@@ -8,6 +9,10 @@ class PeoplesController < ActionController::Base
   end
 
   private
+
+  def user_email_validation_service
+    UserEmailValidationService.new(user: person)
+  end
 
   def person_creator_service
     PersonCreatorService.new(person: person)
